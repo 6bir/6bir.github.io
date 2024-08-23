@@ -7,37 +7,217 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <!-- 顶部公告样式 -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-top-banner-plugin@latest/dist/style.css" />
+  <!-- 面包屑导航插件样式 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-breadcrumb@latest/dist/breadcrumb.min.css">
+
 </head>
-<body>
+<body ><!-- 默认关闭侧边栏：class="close" -->
   <div id="app">Loading...</div>
 
   <script>
     window.$docsify = {
       loadSidebar: true,  //开启侧边栏
+      autoHeader: true,//自动设定标题
       loadNavbar: true, //开启导航栏
+      mergeNavbar: true,//小屏设备下合并导航栏到侧边栏
+      loadFooter: '_footer.md',//启用页脚插件，true, false, 页面路径
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md' //避免目录回退
       },
       subMaxLevel: 2, //在自定义侧边栏的同时生成目录
+      externalLinkTarget: '_blank',//新标签页中打开外部链接，_self
+      externalLinkRel: '',//防止新打开的外部页面控制我们的页面
+      cornerExternalLinkTarget: '_blank',//新标签页中打开右上角标，_self
       auto2top: true, //切换页面后自动跳转到页面顶部
-      homepage: './zh-cn/README.md',//设置首页加载路径
+      homepage: './README.md',//设置首页加载路径
       relativePath: true,//启用相对路径，详见 https://docsify.js.org/#/zh-cn/configuration?id=relativepath
       coverpage: {
-        '/': '',
-        '/zh-cn/': '',// 多个封面页，并指定文件名（目前空置）
+        '/': '',// 多个封面页，并指定文件名（目前空置）
       },
       logo: '/_media/icon.svg',//在侧边栏显示网站图标
       name: '异色乌鸫',//文档标题，显示在侧边栏顶部
       nameLink: {
-        '/zh-cn/': '/zh-cn/',
         '/': '/',//点击文档标题后跳转的链接地址，按照路由切换。
       },
-      repo: ''
+      repo: '6bir/6bir',//Github角标指向的链接仓库
+      notFoundPage: '',//加载自定义404页面
+      maxLevel: 6,//最大标题渲染层级，1-6
+      themeColor: '#66ccff',//主题色
+
+      plugins: [//twemoji插件
+        function (hook, vm) {
+          // parse twemoji
+          hook.doneEach(function () {
+            twemoji.parse(document);
+          });
+        },
+      ],
+
+
+      copyCode: {//代码复制插件
+        buttonText: '复制到剪贴板',
+        errorText: '复制失败',
+        successText: '复制成功',
+      },
+
+
+      pagination: {//底部翻页按钮插件
+        previousText: '上一篇',
+        nextText: '下一篇',
+        crossChapter: true,//允许导航至上一章/下一章
+        crossChapterText: true,//显示章节名称
+      },
+
+
+      count: {//字数统计插件 
+        countable: true,
+        fontsize: '0.9em',
+        color: 'rgb(90,90,90)',
+        language: 'chinese',
+        isExpected: true,
+      },
+
+
+      tabs: {//选项卡插件
+        persist: true, // 刷新页面后是否保持已选的选项卡
+        sync: true, // 是否同步所有相同标签的选项卡
+        theme: 'classic', // 选项卡主题，'classic', 'material', false
+        tabComments: true, // default
+        tabHeadings: true // 允许通过标准 Markdown 定义标签页
+      },
+
+      //分享页面插件
+      share: {
+        // reddit: true,
+        // linkedin: true,
+        // facebook: true,
+        twitter: true,
+        // whatsapp: true,
+        telegram: true,
+        options: {
+          color: '#66ccff'
+        },
+      },
+
+      //顶部公告插件
+      topBanner: {
+        content: '这里是顶部公告',//内容
+        position: 'relative',//定位属性，默认fixed，如果有repo角标则改为relative
+        backgroundColor: '#deebff',//背景颜色
+        textColor: '',//文字颜色
+        zIndex: '-1',//默认99，如果有repo角标则改为-1
+        linkColor: 'textColor',//默认textColor，链接文字颜色
+        textAlign: 'center',//文字排列方向，默认center
+      },
+
+      //警告框插件
+      'flexible-alerts': {
+        style: 'callout',//样式主题，'flat', 'callout'
+        iconVisibility: 'hidden', //visible, hidden
+        note: {
+          label: {
+            '/': '提醒'
+          }
+        },
+        tip: {
+          label: {
+            '/': '建议'
+          }
+        },
+        warning: {
+          label: {
+            '/': '警告'
+          }
+        },
+        attention: {
+          label: {
+            '/': '注意'
+          }
+        },
+        //自定义警告框样式
+        important: {
+          label: {
+            '/': '注意'
+          },
+          icon: 'fa-solid fa-circle-exclamation',//使用Font Awsome
+          className: 'important',
+        },
+        caution:{
+          label: {
+            '/':'Comment'
+          },
+          icon: 'fa-solid fa-comment',//使用Font Awsome
+          className: 'caution',
+        },
+      },
+
+      //页面更新时间
+      timeUpdater: {
+        text: ">最后更新时间: {docsify-updated}",
+        formatUpdated: "{YYYY}/{MM}/{DD} {HH}:{mm}:{ss}",
+        whereToPlace: "top",  // "top" or "bottom", default to "bottom"
+      },
+
+      //网站访问量统计插件
+      busuanzi: true,
+
+      //面包屑导航插件
+      breadcrumb: {
+        showHome: true,//布尔值
+        homeText: 'Home',//首页文本，大概支持多语言？
+        separator: ' › ',//分隔符
+        casing: 'capitalize',
+        linkColor: 'var(--theme-color, #42b983)',
+        size: 'small'
+      }
     }
   </script>
+
+
+
+
+
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- 启用emoji插件 -->
+  <!-- emoji插件 -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+  <!-- 在页面上生成「在Github编辑」按钮的插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
+  <!-- 快速复制代码栏内代码的插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <!-- 底部翻页按钮插件 -->
+  <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <!-- 字数统计插件 -->
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+  <!-- 选项卡插件：https://jhildenbiddle.github.io/docsify-tabs/#/ -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs"></script>
+  <!-- 分享插件：https://coroo.github.io/docsify-share/#/ -->
+  <script src="//unpkg.com/docsify-share/build/index.min.js"></script>
+  <!-- 页脚插件：https://github.com/erickjx/docsify-footer-enh -->
+  <!-- <script src="//unpkg.com/docsify-footer-enh/dist/docsify-footer-enh.min.js"></script> -->
+  <!-- 另一个页脚插件：https://alertbox.github.io/docsify-footer/#/ -->
+  <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js"></script>
+  <!-- 警告框插件 -->
+  <script src="https://unpkg.com/docsify-plugin-flexible-alerts"></script>
+  <!-- 警告框依赖Font Awsome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.js"
+    integrity="sha512-5FvlLK9/1zFkolsL3agoJESBOWEd1gEzY1/Ul5Qw9cTMiPf/tiZoFD10DB9rQLK/rBBUfXECkG6ZaV7RXkcWNw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- 双栏布局插件 -->
+  <!-- <script src="//unpkg.com/docsify-slides/dist/docsify-slides.min.js"></script> -->
+  <!-- Twemoji插件 -->
+  <script src="//cdn.jsdelivr.net/gh/TaQini/docsify-twemoji@master/twemoji.min.js"></script>
+  <!-- 顶部公告插件 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-top-banner-plugin@latest/dist/index.js"></script>
+  <!-- 文章更新时间显示插件 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.min.js"></script>
+  <!-- 图片描述文字显示插件，在插入图片的时候方框里面插入单引号就行 -->
+  <script src="https://cdn.jsdelivr.net/gh/h-hg/docsify-image-caption/dist/docsify-image-caption.min.js"></script>
+  <!-- 网站访问量统计插件 -->
+  <script src="https://unpkg.com/docsify-busuanzi@1.0.1/dist/docsify-busuanzi.min.js"></script>
+  <!-- 面包屑导航插件 -->
+  <script async src="https://cdn.jsdelivr.net/npm/docsify-breadcrumb@latest/dist/index.min.js"></script>
 </body>
 </html>
