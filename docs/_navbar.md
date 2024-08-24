@@ -1,6 +1,6 @@
 -   [首页](/)
--   [友链](single\friends.md) 
--    [关于](single\about.md) 
+-   [友链](single/friends.md) 
+-    [关于](single/about.md) 
 -   我的其他平台账号
     -   哔哩哔哩
     -   网易云音乐

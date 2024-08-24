@@ -1,7 +1,7 @@
 -   [首页](/)
 -   杂文
 -   笔记
-    -    [游戏开发](gamedev\gamedev.md) 
+    -    [游戏开发](gamedev/gamedev.md) 
     -   编程
     -   音乐制作
     -   视频剪辑
