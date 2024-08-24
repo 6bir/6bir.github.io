@@ -11,7 +11,10 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-top-banner-plugin@latest/dist/style.css" />
   <!-- 面包屑导航插件样式 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-breadcrumb@latest/dist/breadcrumb.min.css">
-
+  <!-- 生成页面目录 -->
+  <link rel="stylesheet" href="https://unpkg.com/docsify-plugin-toc@1.3.1/dist/light.css">
+  <!-- 侧边栏折叠：箭头样式 -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
 </head>
 <body ><!-- 默认关闭侧边栏：class="close" -->
   <div id="app">Loading...</div>
@@ -19,14 +22,15 @@
   <script>
     window.$docsify = {
       loadSidebar: true,  //开启侧边栏
-      autoHeader: true,//自动设定标题
+      autoHeader: false,//自动设定标题
       loadNavbar: true, //开启导航栏
       mergeNavbar: true,//小屏设备下合并导航栏到侧边栏
       loadFooter: '_footer.md',//启用页脚插件，true, false, 页面路径
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md' //避免目录回退
       },
-      subMaxLevel: 2, //在自定义侧边栏的同时生成目录
+      subMaxLevel: 1, //在自定义侧边栏的同时生成目录,数字1-6或者布尔值
+      sidebarDisplayLevel: 1, // set sidebar display level
       externalLinkTarget: '_blank',//新标签页中打开外部链接，_self
       externalLinkRel: '',//防止新打开的外部页面控制我们的页面
       cornerExternalLinkTarget: '_blank',//新标签页中打开右上角标，_self
@@ -37,7 +41,7 @@
         '/': '',// 多个封面页，并指定文件名（目前空置）
       },
       logo: '/_media/icon.svg',//在侧边栏显示网站图标
-      name: '异色乌鸫',//文档标题，显示在侧边栏顶部
+      name: '鸫の站',//文档标题，显示在侧边栏顶部
       nameLink: {
         '/': '/',//点击文档标题后跳转的链接地址，按照路由切换。
       },
@@ -46,7 +50,8 @@
       maxLevel: 6,//最大标题渲染层级，1-6
       themeColor: '#66ccff',//主题色
 
-      plugins: [//twemoji插件
+      //twemoji插件
+      plugins: [
         function (hook, vm) {
           // parse twemoji
           hook.doneEach(function () {
@@ -55,23 +60,23 @@
         },
       ],
 
-
-      copyCode: {//代码复制插件
+        //代码复制插件
+      copyCode: {
         buttonText: '复制到剪贴板',
         errorText: '复制失败',
         successText: '复制成功',
       },
 
-
-      pagination: {//底部翻页按钮插件
+      //底部翻页按钮插件
+      pagination: {
         previousText: '上一篇',
         nextText: '下一篇',
         crossChapter: true,//允许导航至上一章/下一章
         crossChapterText: true,//显示章节名称
       },
 
-
-      count: {//字数统计插件 
+      //文章字数统计插件 
+      count: {
         countable: true,
         fontsize: '0.9em',
         color: 'rgb(90,90,90)',
@@ -79,8 +84,8 @@
         isExpected: true,
       },
 
-
-      tabs: {//选项卡插件
+      //文章内选项卡插件
+      tabs: {
         persist: true, // 刷新页面后是否保持已选的选项卡
         sync: true, // 是否同步所有相同标签的选项卡
         theme: 'classic', // 选项卡主题，'classic', 'material', false
@@ -88,7 +93,7 @@
         tabHeadings: true // 允许通过标准 Markdown 定义标签页
       },
 
-      //分享页面插件
+      //右下角分享页面插件
       share: {
         // reddit: true,
         // linkedin: true,
@@ -104,7 +109,7 @@
       //顶部公告插件
       topBanner: {
         content: '这里是顶部公告',//内容
-        position: 'relative',//定位属性，默认fixed，如果有repo角标则改为relative
+        position: 'fixed',//定位属性，默认fixed，如果有repo角标则改为relative
         backgroundColor: '#deebff',//背景颜色
         textColor: '',//文字颜色
         zIndex: '-1',//默认99，如果有repo角标则改为-1
@@ -112,7 +117,7 @@
         textAlign: 'center',//文字排列方向，默认center
       },
 
-      //警告框插件
+      //文章内警告框插件
       'flexible-alerts': {
         style: 'callout',//样式主题，'flat', 'callout'
         iconVisibility: 'hidden', //visible, hidden
@@ -153,7 +158,7 @@
         },
       },
 
-      //页面更新时间
+      //文章页面更新时间显示插件
       timeUpdater: {
         text: ">最后更新时间: {docsify-updated}",
         formatUpdated: "{YYYY}/{MM}/{DD} {HH}:{mm}:{ss}",
@@ -170,8 +175,15 @@
         separator: ' › ',//分隔符
         casing: 'capitalize',
         linkColor: 'var(--theme-color, #42b983)',
-        size: 'small'
-      }
+        size: 'normal'//1em
+      },
+
+      //文章右侧标题目录插件
+      toc: {
+        tocMaxLevel: 3,//建议将 subMaxLevel 设置为'tocMaxLevel'数量-1
+        target: 'h2, h3, h4, h5, h6',
+        ignoreHeaders: ['<!-- {docsify-ignore} -->', '<!-- {docsify-ignore-all} -->']
+      },
     }
   </script>
 
@@ -210,7 +222,7 @@
   <!-- Twemoji插件 -->
   <script src="//cdn.jsdelivr.net/gh/TaQini/docsify-twemoji@master/twemoji.min.js"></script>
   <!-- 顶部公告插件 -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify-top-banner-plugin@latest/dist/index.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/docsify-top-banner-plugin@latest/dist/index.js"></script> -->
   <!-- 文章更新时间显示插件 -->
   <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.min.js"></script>
   <!-- 图片描述文字显示插件，在插入图片的时候方框里面插入单引号就行 -->
@@ -219,5 +231,9 @@
   <script src="https://unpkg.com/docsify-busuanzi@1.0.1/dist/docsify-busuanzi.min.js"></script>
   <!-- 面包屑导航插件 -->
   <script async src="https://cdn.jsdelivr.net/npm/docsify-breadcrumb@latest/dist/index.min.js"></script>
+  <!-- 生成页面目录 -->
+  <script src="https://unpkg.com/docsify-plugin-toc@1.3.1/dist/docsify-plugin-toc.min.js"></script>
+  <!-- 左侧侧边栏折叠插件 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/docsify-sidebar-collapse.min.js"></script>
 </body>
 </html>
